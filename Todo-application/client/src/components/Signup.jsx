@@ -20,7 +20,7 @@ function Signup(){
           password1: password1.current.value,
           password2: password2.current.value,
         };
-       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`,payload)
+       await axios.post(`https://todoapp-q6s4.onrender.com/signup`,payload)
       .then((res) => {res.data.message==='Success'?navigate('/login'):setMessage(res.data.message)})
       .catch((err) => console.error(err));
     }
