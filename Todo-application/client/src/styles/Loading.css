@@ -1,0 +1,22 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(132, 0, 255, 0.2);
+  border-top: 4px solid #8400ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Rotation animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
