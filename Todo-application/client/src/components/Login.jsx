@@ -16,7 +16,7 @@ function Login(){
             email:email.current.value,
             password:password.current.value
         };
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`,payload)
+        axios.post(`https://todoapp-q6s4.onrender.com/login`,payload)
         .then((res)=>{
             console.log(res)
             localStorage.setItem("token", res.data.token);
