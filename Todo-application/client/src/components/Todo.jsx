@@ -12,7 +12,7 @@ function Todo() {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
   const task = useRef();
-  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  const BASE_URL = "https://todoapp-q6s4.onrender.com";
 
   const fetchTasks = async () => {
     const token = localStorage.getItem("token");
