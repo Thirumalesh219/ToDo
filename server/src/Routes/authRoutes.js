@@ -2,10 +2,11 @@ const {Router}=require('express');
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const User=require("../models/user");
+const { signupValidation, loginValidation } = require('../middleware/validateBody');
 
 const router=Router();
 
-router.post('/signup',async(req,res)=>{
+router.post('/signup',signupValidation ,async(req,res)=>{
     const {username,email,password1,password2}=req.body;
     if(password1!==password2){
         return res.json({message:"Password Does Not Match"});
@@ -20,7 +21,7 @@ router.post('/signup',async(req,res)=>{
     return res.json({message:`Success`});
 })
 
-router.post("/login", async(req,res)=>{
+router.post("/login", loginValidation ,async(req,res)=>{
     const {email,password}=req.body;
     const user=await User.findOne({email:email});
     if(user)

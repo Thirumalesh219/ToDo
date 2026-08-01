@@ -72,10 +72,23 @@
   text-decoration: underline;
 }
 
-.warning {
-  font-size: 1rem;
+.error-message {
+  font-size: 0.9rem;
   text-align: center;
   color: red;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #d8000c;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.close-button:hover {
+    color: #900;
 }
 
 /* ✅ Mobile responsiveness */
@@ -95,7 +108,4 @@
     padding: 0.65rem;
   }
 
-  .warning {
-    font-size: 0.9rem;
-  }
 }

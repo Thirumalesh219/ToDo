@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Signup.css'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 function Signup(){
     let username=useRef();
@@ -21,22 +22,41 @@ function Signup(){
           password2: password2.current.value,
         };
        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`,payload)
-      .then((res) => {res.data.message==='Success'?navigate('/login'):setMessage(res.data.message)})
+      .then((res) => {
+        console.log(res,res.data?.errors)
+        if(res.data?.message==='Success')
+            navigate('/login')
+        else
+            setMessage(res.data?.errors?.[0]?.msg || res.data?.message)
+        })
       .catch((err) => console.error(err));
     }
+    useEffect(()=>{
+        username.current.focus();
+    },[]);
     return (<>
         <div className="signup-container">
             <form className="signup-form" onSubmit={handleSubmit}>
                 <h2 className="signup-heading">Create an Account</h2>
                 <input className="signup-input" type="text" ref={username} placeholder="Username" />
-                <input className="signup-input" type="email" ref={email} placeholder="Email" />
+                <input className="signup-input" type="text" ref={email} placeholder="Email" />
                 <input className="signup-input" type="password" ref={password1} placeholder="Password" />
                 <input className="signup-input" type="password" ref={password2} placeholder="Re-enter Password" />
                 <input className="signup-button" type="submit" value="Signup" />
                 <p className="signup-link-text">
                     Already have an account? <Link className="signup-link" to="/login">Login</Link>
                 </p>
-                <h4 className="warning">{message}</h4>
+                {message && (
+                    <div className="error-message">
+                        <span>{message}</span>
+                        <button 
+                            className="close-button"
+                            onClick={() => setMessage('')}
+                        >
+                            x
+                        </button>
+                    </div>
+                )}
             </form>
         </div>
     </>);
