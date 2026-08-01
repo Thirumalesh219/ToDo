@@ -7,6 +7,10 @@ app.use(express.json());
 app.use(cors());
 app.use(logger)
 
+app.get("/health",(req,res)=>{
+    res.status(200).send({success:true});
+})
+
 const authRoutes = require("./Routes/authRoutes");
 app.use(authRoutes);
 

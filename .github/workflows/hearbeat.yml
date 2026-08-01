@@ -1,0 +1,12 @@
+name: Call health endpoint
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  CallRenderBackend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call render api
+        run: curl https://todoapp-q6s4.onrender.com/health
