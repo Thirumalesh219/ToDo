@@ -15,15 +15,12 @@ router.post('/addtodo',authMiddleware,async(req,res)=>{
 
 router.get("/todo",authMiddleware,async(req,res)=>{
     const tasks=await Tasks.find({user_id:req.user.user},{task:1, isdone:1})
-    const user=await User.find({_id:req.user.user},{username:1,_id:0});
-    res.json({user:user,tasks:tasks});
+    res.json({tasks:tasks});
 });
 
 router.put('/updatetodo/:id',authMiddleware,async(req,res)=>{
     try{
-    const task=await Tasks.findOne({_id:req.params.id});
-    task.isdone=req.body.isdone;
-    await task.save();
+        const task=await Tasks.findOneAndUpdate({_id:req.params.id},{isdone:req.body.isdone});
         res.send({message:"Success"});
     }catch(err){
         res.send({message:"Error occured"});

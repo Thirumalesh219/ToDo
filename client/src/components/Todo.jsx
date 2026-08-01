@@ -9,7 +9,7 @@ import { RiAddLargeFill } from "react-icons/ri";
 function Todo() {
   const [fetching, setFetching] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [user, setUser] = useState("");
+  const user = localStorage.getItem("user");
   const navigate = useNavigate();
   const task = useRef();
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
@@ -28,10 +28,10 @@ function Todo() {
         },
       });
       setTasks(res.data.tasks);
-      setUser(res.data.user[0]?.username || "User");
     } catch (err) {
       console.error("Failed to fetch Todo items:", err);
       localStorage.removeItem("token");
+      localStorage.removeItem("user")
       navigate("/login");
     } finally {
       setFetching(false);
