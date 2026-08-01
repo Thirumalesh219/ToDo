@@ -1,5 +1,6 @@
 name: Call health endpoint
 on:
+  workflow_dispatch:
   schedule:
     - cron: '*/5 * * * *'
 
