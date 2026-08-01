@@ -4,6 +4,7 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
 import Todo from './components/Todo'
+import { Toaster } from 'sonner'
 
 function App() {
 
@@ -15,9 +16,13 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<Signup></Signup>}></Route>
         <Route path='/todo' element={<Todo></Todo>} />
-        <Route></Route>
       </Routes>
     </BrowserRouter>
+    <Toaster 
+      position="top-right"
+      richColors
+      duration={1500}
+    />
     </>
   )
 }
