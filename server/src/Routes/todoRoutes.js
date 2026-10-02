@@ -9,11 +9,11 @@ const router=Router();
 router.post('/addtodo',authMiddleware,async(req,res)=>{
     try{
         const {task}=req.body;
-        const item=await Tasks.create({user_id:req.user.user,task:task});
+        const item=await Tasks.create({user_id:req.user.id,task:task});
         item.save();
-        return res.status(200).send({message:"Success"});
+        return res.status(200).json({message:"Success","task":item});
     } catch(err) {
-        return res.status(400).send({message:"Failed to create Task"});
+        return res.status(400).json({message:"Failed to create Task"});
     }
 });
 
@@ -26,7 +26,7 @@ router.get("/todo", authMiddleware, async (req, res) => {
     const skip = (page - 1) * limit;
 
     const filter = {
-      user_id: req.user.user,
+      user_id: req.user.id,
     };
 
     if (status === "completed") {
@@ -38,16 +38,16 @@ router.get("/todo", authMiddleware, async (req, res) => {
     }
 
     const totalTasks = await Tasks.countDocuments({
-      user_id: req.user.user,
+      user_id: req.user.id,
     });
 
     const completedTasks = await Tasks.countDocuments({
-      user_id: req.user.user,
+      user_id: req.user.id,
       isdone: true,
     });
 
     const pendingTasks = await Tasks.countDocuments({
-      user_id: req.user.user,
+      user_id: req.user.id,
       isdone: false,
     });
 
@@ -77,19 +77,42 @@ router.get("/todo", authMiddleware, async (req, res) => {
 
 router.put('/updatetodo/:id',authMiddleware,async(req,res)=>{
     try{
-        const task=await Tasks.findOneAndUpdate({_id:req.params.id},{isdone:req.body.isdone});
-        res.status(200).send({message:"Success"});
+        const task=await Tasks.findOneAndUpdate(
+          {
+            _id:req.params.id,
+            user_id:req.user.id
+          },
+          {
+            isdone:req.body.isdone
+          },
+          {
+            new:true
+          }
+        );
+
+        if(!task){
+          return res.status(404).send({message:"Task not Found or you don't have permission to delete it"});
+        }
+        res.status(200).json({message:"Success","task":task});
     } catch(err){
-        res.status(400).send({message:"Error occured"});
+        res.status(400).json({message:"Error occured"});
     }
 });
 
 router.delete("/deletetodo/:id",authMiddleware,async(req,res)=>{
     try{
-        const task=await Tasks.deleteOne({_id:req.params.id});
-        res.status(200).send({message:"Success"});
+        const task=await Tasks.deleteOne(
+          {
+            _id:req.params.id,
+            user_id:req.user.id
+          }
+        );
+        if(task.deletedCount==0){
+          return res.status(404).send({message:"Task not Found or you don't have permission to delete it"});
+        }
+        res.status(200).json({message:"Success"});
     } catch(err){
-        res.status(400).send({message:"Cannot delete"});
+        res.status(400).json({message:"Cannot delete"});
     }
 });
 

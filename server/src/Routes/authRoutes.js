@@ -32,7 +32,7 @@ router.post("/login", loginValidation ,async(req,res)=>{
     }
     else
         return res.json({message:"Invalid Crendentials"});
-    const token=jwt.sign({user:user._id},process.env.JWT_SECRET);
+    const token=jwt.sign({id:user._id},process.env.JWT_SECRET);
     return res.json({"user":user.username, token:token, message:"Success"});
 })
 
