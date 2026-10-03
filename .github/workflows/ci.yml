@@ -69,11 +69,14 @@ jobs:
       - name: Wait for the backend to start
         run: npx wait-on http://localhost:${{secrets.PORT}}/health
 
+      - run: pwd
+
       - run: cd ..
+      - run: pwd
       - run: cd api-tests
 
       - name: Run the api-scripts
-        run: newman run Todo.postman_collection.json -e variables.json -r cli,htmlextra
+        run: newman run ../api-tests/Todo.postman_collection.json -e ../api-tests/variables.json -r cli,htmlextra
 
       - run: ls
       - name: Store the API results to github artifacts
