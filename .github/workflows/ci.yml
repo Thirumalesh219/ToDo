@@ -60,7 +60,7 @@ jobs:
       - name: Inject env file
         run: |
           echo "PORT=${{secrets.PORT}}">>.env
-          echo "JWT_SECRET=${{secrets.JWT_TOKEN}}">>.env
+          echo "JWT_SECRET=${{secrets.JWT_SECRET}}">>.env
           echo "MONGO_URL=${{secrets.MONGO_URL}}">>.env
 
       - name: Start the backend server
