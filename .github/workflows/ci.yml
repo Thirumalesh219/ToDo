@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     defaults: 
-      working-directory: client
+      run:
+        working-directory: client
 
     steps:
       - name: Checkout code
@@ -23,7 +24,7 @@ jobs:
         with:
           node-version: 22.19.0
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: client/package-lock.json
 
       - name: Install frontend dependencies
         run: npm ci
@@ -34,7 +35,8 @@ jobs:
   Backend Build and api-tests:
     runs-on: ubuntu-latest
     defaults:
-      working-directory: server
+      run:
+        working-directory: server
     steps:
       - name: Checkout to Code
         uses: actions/checkout@v4
@@ -44,7 +46,7 @@ jobs:
         with:
           node-version: 22.19.0
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: server/package-lock.json
 
       - name: Install newman
         run: npm install -g newman
