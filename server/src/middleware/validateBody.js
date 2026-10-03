@@ -29,7 +29,7 @@ const signupValidation = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.json({
+            return res.status(400).json({
                 errors: errors.array()
             });
         }
@@ -55,7 +55,7 @@ const loginValidation = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.json({
+            return res.staus(400).json({
                 errors: errors.array()
             });
         }
@@ -64,8 +64,29 @@ const loginValidation = [
     }
 ];
 
+const updateTodoValidation = [
+
+    body("isdone")
+        .notEmpty()
+        .withMessage("New Status not found")
+        .isBoolean().withMessage("Update accepts only Boolean value"),
+
+    (req, res, next)=>{
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array()
+            });
+        }
+
+        next();
+    }
+]
+
 
 module.exports = {
     signupValidation,
-    loginValidation
+    loginValidation,
+    updateTodoValidation
 };

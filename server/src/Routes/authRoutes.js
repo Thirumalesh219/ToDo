@@ -9,16 +9,16 @@ const router=Router();
 router.post('/signup',signupValidation ,async(req,res)=>{
     const {username,email,password1,password2}=req.body;
     if(password1!==password2){
-        return res.json({message:"Password Does Not Match"});
+        return res.status(200).json({message:"Password Does Not Match"});
     }
     const ispresent=await User.findOne({email:email});
     if(ispresent){
-        return res.json({message:"Email Already Exists"});
+        return res.status(200).json({message:"Email Already Exists"});
     }
     const password=await bcrypt.hash(password1,10);
     const user=await User.create({username,email,password});
     user.save();
-    return res.json({message:`Success`});
+    return res.status(200).json({message:`Success`});
 })
 
 router.post("/login", loginValidation ,async(req,res)=>{
@@ -28,10 +28,10 @@ router.post("/login", loginValidation ,async(req,res)=>{
     {
         const isMatch=await bcrypt.compare(password,user.password);
         if(!isMatch)
-            return res.json({message:"Invalid Crendentials"});
+            return res.status(400).json({message:"Invalid Crendentials"});
     }
     else
-        return res.json({message:"Invalid Crendentials"});
+        return res.status(400).json({message:"Invalid Crendentials"});
     const token=jwt.sign({id:user._id},process.env.JWT_SECRET);
     return res.json({"user":user.username, token:token, message:"Success"});
 })

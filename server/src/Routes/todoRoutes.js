@@ -2,6 +2,7 @@ const {Router}=require('express');
 const User=require("../models/user");
 const Tasks=require('../models/tasks');
 const authMiddleware=require("../middleware/authMiddleware");
+const { updateTodoValidation } = require('../middleware/validateBody');
 
 const router=Router();
 
@@ -9,9 +10,12 @@ const router=Router();
 router.post('/addtodo',authMiddleware,async(req,res)=>{
     try{
         const {task}=req.body;
+        if(!task)
+          return res.status(400).json({message:"Task not found"})
+
         const item=await Tasks.create({user_id:req.user.id,task:task});
         item.save();
-        return res.status(200).json({message:"Success","task":item});
+        return res.status(201).json({message:"Success","task":item});
     } catch(err) {
         return res.status(400).json({message:"Failed to create Task"});
     }
@@ -75,7 +79,7 @@ router.get("/todo", authMiddleware, async (req, res) => {
   }
 });
 
-router.put('/updatetodo/:id',authMiddleware,async(req,res)=>{
+router.put('/updatetodo/:id',authMiddleware,updateTodoValidation,async(req,res)=>{
     try{
         const task=await Tasks.findOneAndUpdate(
           {
