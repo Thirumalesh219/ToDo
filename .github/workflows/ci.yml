@@ -66,6 +66,9 @@ jobs:
       - name: Start the backend server
         run: npm run start &
 
+      - name: Wait for the backend to start
+        run: npx wait-on http://localhost:${{secrets.PORT}}
+
       - name: Run the api-scripts
         run: newman run ./api-tests/Todo.postman_collection.json -e variables.json -r cli,htmlextra
 
