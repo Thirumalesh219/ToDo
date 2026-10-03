@@ -20,3 +20,5 @@ server/build/
 # OS-specific stuff
 .DS_Store
 Thumbs.db
+
+**/newman

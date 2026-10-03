@@ -1,0 +1,73 @@
+name: CI pipeline for Todo app
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+
+jobs:
+  Frontend build:
+    runs-on: ubuntu-latest
+
+    defaults: 
+      working-directory: client
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+      
+      - name: build
+        run: npm build
+
+  Backend Build and api-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      working-directory: server
+    steps:
+      - name: Checkout to Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install newman
+        run: npm install -g newman
+
+      - name: Install HTML reporter
+        run: npm install -g newman-reporter-htmlextra
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start the backend server
+        run: npm run dev
+
+      - name: Run the api-scripts
+        run: newman run ./api-tests/Todo.postman_collection.json -e variables.json -r cli,htmlextra
+
+      - run: cd ..
+      - run: cd api-tests
+      - run: ls
+      - name: Store the API results to github artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: PostManResults
+          path: newman
+
+        

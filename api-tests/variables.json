@@ -1,0 +1,10 @@
+{
+	"BaseURL":" http://localhost:3000",
+	"UserName":"Thiru",
+	"Email":"thiru@gmail.com",
+	"Password":"1234",
+	"ConfirmPassword":"1234",
+	"MisMatchPassword":"12345",
+	"Task":"Drinking Water - Test",
+	"newStatus":true
+}

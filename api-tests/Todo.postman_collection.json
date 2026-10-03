@@ -1,0 +1,766 @@
+{
+  "info": {
+    "_postman_id": "a2c0bf44-0740-49ff-aa69-84e2ad053469",
+    "name": "Todo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45334017",
+    "_collection_link": "https://go.postman.co/collection/45334017-a2c0bf44-0740-49ff-aa69-84e2ad053469?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "SignUp",
+      "item": [
+        {
+          "name": "EmptyBody",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for missing details\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\npm.test(\"Verify the output format\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"errors\").to.be.an(\"array\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/signup",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EmptyInputs",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for missing details\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\npm.test(\"Verify the output format\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"errors\").to.be.an(\"array\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\":\"\",\r\n    \"email\":\"\",\r\n    \"password1\":\"\",\r\n    \"password2\":\"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/signup",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PasswordMisMatch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for email already esits\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Verify the output format\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"message\").to.be.an(\"string\");\r\n    pm.expect(jsonData.message).to.equal(\"Password Does Not Match\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\":\"{{UserName}}\",\r\n    \"email\":\"{{Email}}\",\r\n    \"password1\":\"{{Password}}\",\r\n    \"password2\":\"{{MisMatchPassword}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/signup",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ValidSignUp",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Validate response has success message\",function(){\r\n    pm.expect(pm.response.json().message).to.eql(\"Success\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\":\"{{UserName}}\",\r\n    \"email\":\"{{Email}}\",\r\n    \"password1\":\"{{Password}}\",\r\n    \"password2\":\"{{ConfirmPassword}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/signup",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AlreadyExistingEmail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for email already esits\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Verify the output format\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"message\").to.be.an(\"string\");\r\n    pm.expect(jsonData.message).to.equal(\"Email Already Exists\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\":\"{{UserName}}\",\r\n    \"email\":\"{{Email}}\",\r\n    \"password1\":\"{{Password}}\",\r\n    \"password2\":\"{{ConfirmPassword}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/signup",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "Invalid Credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for Invalid credentials\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\npm.test(\"Verify the output message\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"message\").to.be.an(\"string\");\r\n    pm.expect(jsonData.message).to.equal(\"Invalid Crendentials\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"{{Email}}\",\r\n    \"password\":\"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/login",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ValidLogin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Verify the Output Format\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"user\");\r\n    pm.expect(jsonData).to.have.property(\"token\");\r\n    pm.expect(jsonData).to.have.property(\"message\");\r\n});\r\npm.test(\"Verify the response username matches the signed up username\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData.user).to.be.eql(pm.collectionVariables.get(\"UserName\"));\r\n});\r\npm.test(\"Store the AuthToken to collection\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData.token).to.not.be.undefined;\r\n    pm.collectionVariables.set(\"AuthToken\", jsonData.token);\r\n    console.log(\"AuthToken is set to: \" + pm.collectionVariables.get(\"AuthToken\"));\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"{{Email}}\",\r\n    \"password\":\"{{Password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/login",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AddTodo",
+      "item": [
+        {
+          "name": "Unauthorized- Add todo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify the status code and the response\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.response.to.have.status(401);\r\n    pm.expect(jsonData).to.have.property(\"message\").to.eql(\"No token provided\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"task\":\"Switch\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/addtodo",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "addtodo"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EmptyBody",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify the status code for response\", function(){\r\n    pm.response.to.have.status(400);\r\n});\r\npm.test(\"Verify the message in the response body\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"message\").to.eql(\"Task not found\");\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{AuthToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/addtodo",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "addtodo"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EmptyStringForTask",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify the status code for response\", function(){\r\n    pm.response.to.have.status(400);\r\n});\r\npm.test(\"Verify the message in the response body\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"message\").to.eql(\"Task not found\");\r\n});\r\n"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{AuthToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"task\":\"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/addtodo",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "addtodo"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Valid-Add",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify Status code for Add todo\", function(){\r\n    pm.response.to.have.status(201);\r\n});\r\npm.test(\"Validate the output format\",function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"message\").to.be.an(\"string\");\r\n    pm.expect(jsonData).to.have.property(\"task\").to.be.an(\"object\");\r\n    pm.expect(jsonData.task).to.have.property(\"user_id\");\r\n    pm.expect(jsonData.task).to.have.property(\"task\");\r\n    pm.expect(jsonData.task).to.have.property(\"isdone\");\r\n    pm.expect(jsonData.task).to.have.property(\"_id\");\r\n});\r\npm.test(\"Store the task id for update and delete\",function(){\r\n    var jsonData = pm.response.json();\r\n    pm.collectionVariables.set(\"TaskId\",jsonData.task._id);\r\n    console.log(\"TaskId is set to: \" + pm.collectionVariables.get(\"TaskId\"));\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{AuthToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"task\":\"Switch\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/addtodo",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "addtodo"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "EditTodo",
+      "item": [
+        {
+          "name": "New Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for missing details\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\npm.test(\"Verify the output format\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"errors\").to.be.an(\"array\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{AuthToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/updatetodo/{{TaskId}}",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "updatetodo",
+                "{{TaskId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "InvalidBody",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for missing details\", function () {\r\n    pm.response.to.have.status(400);\r\n});\r\npm.test(\"Verify the output format\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"errors\").to.be.an(\"array\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{AuthToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isdone\":\"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/updatetodo/{{TaskId}}",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "updatetodo",
+                "{{TaskId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unauthorized - EditTodo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify the status code and the response\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.response.to.have.status(401);\r\n    pm.expect(jsonData).to.have.property(\"message\").to.eql(\"No token provided\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isdone\":true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/updatetodo/{{TaskId}}",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "updatetodo",
+                "{{TaskId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "EditTodo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify status code for the edit todo\", function(){\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Verify the Output format\", function(){\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"message\");\r\n    pm.expect(jsonData).to.have.property(\"task\");\r\n    pm.expect(jsonData.task).to.have.property(\"_id\");\r\n    pm.expect(jsonData.task).to.have.property(\"user_id\");\r\n    pm.expect(jsonData.task).to.have.property(\"task\");\r\n    pm.expect(jsonData.task).to.have.property(\"isdone\");\r\n    pm.expect(jsonData.task.isdone).to.be.a(\"boolean\");\r\n    pm.expect(jsonData.task.isdone).to.eql(pm.collectionVariables.get(\"newStatus\")===\"true\");\r\n})"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{AuthToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isdone\":{{newStatus}}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/updatetodo/{{TaskId}}",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "updatetodo",
+                "{{TaskId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DeleteTodo",
+      "item": [
+        {
+          "name": "DeleteTodo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify the status code\",function(){\r\n    pm.response.to.have.status(200);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{AuthToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/deletetodo/{{TaskId}}",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "deletetodo",
+                "{{TaskId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "GetTodos",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Verify the Output Format\", function () {\r\n    var jsonData = pm.response.json();\r\n    pm.expect(jsonData).to.have.property(\"tasks\").to.be.an(\"array\");\r\n    pm.expect(jsonData).to.have.property(\"currentPage\").to.be.an(\"number\");\r\n    pm.expect(jsonData).to.have.property(\"totalPages\").to.be.an(\"number\");\r\n    pm.expect(jsonData).to.have.property(\"counts\").to.be.an(\"object\");\r\n    pm.expect(jsonData.counts).to.have.property(\"total\").to.be.an(\"number\");\r\n    pm.expect(jsonData.counts).to.have.property(\"completed\").to.be.an(\"number\");\r\n    pm.expect(jsonData.counts).to.have.property(\"pending\").to.be.an(\"number\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{AuthToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/todo?page=1&limit=5&status=all",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "todo"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "status",
+              "value": "all"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseURL",
+      "value": " http://localhost:3000"
+    },
+    {
+      "key": "UserName",
+      "value": "Thiru"
+    },
+    {
+      "key": "Email",
+      "value": "thiru@gmail.com"
+    },
+    {
+      "key": "Password",
+      "value": "1234"
+    },
+    {
+      "key": "ConfirmPassword",
+      "value": "1234"
+    },
+    {
+      "key": "MisMatchPassword",
+      "value": "12345"
+    },
+    {
+      "key": "Task",
+      "value": "Drink Water"
+    },
+    {
+      "key": "newStatus",
+      "value": "true"
+    },
+    {
+      "key": "AuthToken",
+      "value": ""
+    },
+    {
+      "key": "TaskId",
+      "value": ""
+    }
+  ]
+}
