@@ -1,5 +1,5 @@
 {
-	"BaseURL":" http://localhost:3000",
+	"BaseURL":"http://localhost:3000",
 	"UserName":"Thiru",
 	"Email":"thiru@gmail.com",
 	"Password":"1234",
