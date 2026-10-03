@@ -30,7 +30,7 @@ jobs:
         run: npm ci
       
       - name: build
-        run: npm build
+        run: npm run build
 
   BackendBuildAndApiTests:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
         run: npm ci
 
       - name: Start the backend server
-        run: npm run dev
+        run: npm run start
 
       - name: Run the api-scripts
         run: newman run ./api-tests/Todo.postman_collection.json -e variables.json -r cli,htmlextra
