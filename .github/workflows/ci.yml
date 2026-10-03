@@ -64,7 +64,7 @@ jobs:
           echo "MONGO_URL=${{secrets.MONGO_URL}}">>.env
 
       - name: Start the backend server
-        run: npm run start
+        run: npm run start &
 
       - name: Run the api-scripts
         run: newman run ./api-tests/Todo.postman_collection.json -e variables.json -r cli,htmlextra
