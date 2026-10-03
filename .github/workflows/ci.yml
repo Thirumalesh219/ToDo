@@ -72,9 +72,7 @@ jobs:
       - name: Run the api-scripts
         run: newman run ../api-tests/Todo.postman_collection.json -e ../api-tests/variables.json -r cli,htmlextra
 
-      - run: ls
-      - run: cd newman
-      - run: ls
+      - run: find .
       - name: Store the API results to github artifacts
         uses: actions/upload-artifact@v4
         with:
