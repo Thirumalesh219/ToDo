@@ -55,7 +55,7 @@ const loginValidation = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.staus(400).json({
+            return res.status(400).json({
                 errors: errors.array()
             });
         }
